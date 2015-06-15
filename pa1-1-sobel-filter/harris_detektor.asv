@@ -1,0 +1,17 @@
+% function  Merkmale=harris_detektor(Image,varargin) 
+function  [Harris]=harris_detektor(Image,varargin) 
+% In dieser Funktion soll der Harris-Detektor implementiert werden, der
+% Merkmalspunkte aus dem Bild extrahiert
+    % Get gradients along both
+    [SobelX, SobelY] = sobel_xy(Image);
+    % Create Harris matrix for each pixel
+    HarrisMatrices = zeros(size(Image, 1), size(Image, 2), 2, 2);
+    for y = 1:size(Image, 1)
+        for x = 1:size(Image, 2)
+            HarrisMatrices(y, x, 1, 1) = SobelX(y, x) * SobelX(y, x);
+            HarrisMatrices(y, x, 1, 2) = SobelX(y, x) * SobelY(y, x);
+            HarrisMatrices(y, x, 2, 1) = SobelY(y, x) * SobelX(y, x);
+            HarrisMatrices(y, x, 2, 2) = SobelY(y, x) * SobelY(y, x);
+        end
+    end
+end
